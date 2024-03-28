@@ -22,7 +22,6 @@ def displayMessage(role, content):
     st.write('')
 
 def getCompletion(prompt):
-    st.write(st.session_state.messages)
     with st.spinner('Thinking ...'):
         response = client.messages.create(
             model = 'claude-3-opus-20240229',
