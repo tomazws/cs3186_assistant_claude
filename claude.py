@@ -17,7 +17,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    #st.text(content)
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
@@ -26,7 +26,9 @@ def displayMessage(role, content):
                 st.write(messages[i])
             else:
                 # If the message is a graphviz diagram, display it as a diagram
+                st.text('----------')
                 st.text(messages[i])
+                st.text('=========')
                 match = re.search('digraph .*{', message[i])
                 if match and message[i][-2] == '}':
                     message[i] = message[i][match.start():]
