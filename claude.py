@@ -28,7 +28,7 @@ def getCompletion(prompt):
             response = client.messages.create(
                 model = 'claude-3-opus-20240229',
                 max_tokens = 1024,
-                system = prompts.get_instructions(),
+                system = 'When illustrating a state diagram, use DOT language representation of the state diagram instead.',
                 messages = st.session_state.messages
             )
             st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
