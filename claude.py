@@ -20,20 +20,23 @@ if 'messages' not in st.session_state:
 def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
-        # Split the message by code blocks
-        messages = content.split('```')
-        for i in range(len(messages)):
-            message = messages[i]
-            if i % 2 == 0:
-                st.write(message)
-            else:
-                # If the message is a graphviz diagram, display it as a diagram
-                match = re.search('digraph .*{', message)
-                if match and message[-2] == '}':
-                    message = message[match.start():]
-                    st.graphviz_chart(message)
+        if type(content) == list:
+            st.markup(content)
+        else:
+            # Split the message by code blocks
+            messages = content.split('```')
+            for i in range(len(messages)):
+                message = messages[i]
+                if i % 2 == 0:
+                    st.write(message)
                 else:
-                    st.code(message)
+                    # If the message is a graphviz diagram, display it as a diagram
+                    match = re.search('digraph .*{', message)
+                    if match and message[-2] == '}':
+                        message = message[match.start():]
+                        st.graphviz_chart(message)
+                    else:
+                        st.code(message)
     st.write('')
 
 def getCompletion(prompt):
@@ -89,14 +92,14 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         # st.write('-----------------')
         # st.write(uploaded_image.type)
 
-        image_content = {
+        image_content = [{
             'type': 'image',
             'source': {
                 'type': 'base64',
                 'media_type': uploaded_image.type,
                 'data': base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
             }
-        }
+        }]
         displayMessage('user', image_content)
 
     # Display user message in chat message container and add to chat history
