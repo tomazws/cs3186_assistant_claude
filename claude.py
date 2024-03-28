@@ -83,7 +83,7 @@ if uploaded_file is not None:
     # To read file as bytes:
     bytes_data = uploaded_file.getvalue()
 
-    image_data = base64.b64encode(uploaded_file).decode("utf-8")
+    image_data = base64.b64encode(uploaded_file.getvalue()).decode("utf-8")
     st.write('-----------------')
     st.write(image_data)
 
