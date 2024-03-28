@@ -22,19 +22,21 @@ def displayMessage(role, content):
         # Split the message by code blocks
         messages = content.split('```')
         for i in range(len(messages)):
+            message = messages[i]
             if i % 2 == 0:
-                st.write(messages[i])
+                st.write(message)
             else:
                 # If the message is a graphviz diagram, display it as a diagram
                 st.text('----------')
-                st.text(messages[i])
+                st.text(i)
+                st.text(message)
                 st.text('=========')
-                match = re.search('digraph .*{', message[i])
-                if match and message[i][-2] == '}':
-                    message[i] = message[i][match.start():]
-                    st.graphviz_chart(message[i])
+                match = re.search('digraph .*{', message)
+                if match and message[-2] == '}':
+                    message = message[match.start():]
+                    st.graphviz_chart(message)
                 else:
-                    st.write(message[i])
+                    st.code(message)
     st.write('')
 
 def getCompletion(prompt):
