@@ -26,6 +26,7 @@ def displayMessage(role, content):
                 st.write(messages[i])
             else:
                 # If the message is a graphviz diagram, display it as a diagram
+                st.text(messages[i])
                 match = re.search('digraph .*{', message[i])
                 if match and message[i][-2] == '}':
                     message[i] = message[i][match.start():]
