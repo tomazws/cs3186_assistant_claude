@@ -11,19 +11,59 @@ if 'messages' not in st.session_state:
     st.session_state.messages = []
 
 ################################################################################
+##                                 FUNCTIONS                                  ##
+################################################################################
+# Process the messsage and display it in the chat message container and also append message to chat history
+def displayMessage(role, content):
+    st.text(content)
+    with st.chat_message(role):
+        # Split the message by code blocks
+        messages = content.split('```')
+        for message in messages:
+            # If the message is a graphviz diagram, display it as a diagram
+            match = re.search('digraph .* {', message)
+            if match and message[-2] == '}':
+                message = message[match.start():]
+                st.graphviz_chart(message)
+            else:
+                st.write(message)
+    st.write('')
+
+def getCompletion(prompt):
+    pass
+
+################################################################################
 ##                                  LAYOUTS                                   ##
 ################################################################################
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Using Anthropic Claude API')
-st.write('Testing')
 
-message = client.messages.create(
-    model="claude-3-opus-20240229",
-    max_tokens=1024,
-    messages=[
-        {"role": "user", "content": "Hello, Claude"}
-    ]
-)
+# Display chat messages
+for message in st.session_state.messages:
+    displayMessage(message['role'], message['content'])
 
-st.write(message.content)
+with st.sidebar:
+    st.write('Features')
+    
+if st.sidebar.button('Convert NFA to DFA'):
+    message = 'I would like to convert NFA to DFA'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
+    
+if st.sidebar.button('Generate a DFA diagram'):
+    message = 'I would like to generate a DFA from regular expression or langage'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
+
+# message = client.messages.create(
+#     model = 'claude-3-opus-20240229',
+#     max_tokens = 1024,
+#     messages = [
+#         {'role': 'user', 'content': 'Hello, Claude'}
+#     ]
+# )
+
+# st.write(message.content)
