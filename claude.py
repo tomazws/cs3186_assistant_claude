@@ -80,9 +80,25 @@ if st.sidebar.button('Generate a DFA diagram'):
 # File uploader
 uploaded_file = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
 if uploaded_file is not None:
-    # Read file as bytes:
-    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    # To read file as bytes:
+    bytes_data = uploaded_file.getvalue()
+    st.write('-----------------')
     st.write(bytes_data)
+
+    # To convert to a string based IO:
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    st.write('-----------------')
+    st.write(stringio)
+
+    # To read file as string:
+    string_data = stringio.read()
+    st.write('-----------------')
+    st.write(string_data)
+
+    # Can be used wherever a "file-like" object is accepted:
+    dataframe = pd.read_csv(uploaded_file)
+    st.write('-----------------')
+    st.write(dataframe)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
