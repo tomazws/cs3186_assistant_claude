@@ -1,7 +1,7 @@
 from anthropic import Anthropic
 import streamlit as st
 import re
-from io import StringIO
+import base64
 import prompts
 
 ################################################################################
@@ -82,23 +82,10 @@ uploaded_file = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 
 if uploaded_file is not None:
     # To read file as bytes:
     bytes_data = uploaded_file.getvalue()
-    st.write('-----------------')
-    st.write(bytes_data)
 
-    # To convert to a string based IO:
-    stringio = StringIO(bytes_data.decode("utf-8"))
+    image_data = base64.b64encode(uploaded_file).decode("utf-8")
     st.write('-----------------')
-    st.write(stringio)
-
-    # To read file as string:
-    string_data = stringio.read()
-    st.write('-----------------')
-    st.write(string_data)
-
-    # Can be used wherever a "file-like" object is accepted:
-    dataframe = pd.read_csv(uploaded_file)
-    st.write('-----------------')
-    st.write(dataframe)
+    st.write(image_data)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
