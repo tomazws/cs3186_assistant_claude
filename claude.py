@@ -95,10 +95,11 @@ if st.sidebar.button('Generate a DFA diagram'):
 prompt = st.chat_input('Ask me anything about CS 3186')
 
 # File uploader
-uploaded_image = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
+
 
 # Chat input
 if prompt:
+    uploaded_image = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
     content = []
 
     # If there are files uploaded
