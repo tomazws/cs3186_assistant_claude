@@ -17,10 +17,8 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
     with st.chat_message(role):
         st.write(content)
-    st.write('')
 
 def getCompletion(prompt):
     with st.spinner('Thinking ...'):
@@ -32,6 +30,7 @@ def getCompletion(prompt):
                 messages = st.session_state.messages
             )
             st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
+            st.text(response.content)
             displayMessage('assistant', response.content[0].text)
         except Exception as e:
             st.error(f'Error: {e}')
