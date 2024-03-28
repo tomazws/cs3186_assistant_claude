@@ -23,7 +23,7 @@ def displayMessage(role, content):
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image':
-                st.image(io.BytesIO(item['source']['data']))
+                st.text(io.BytesIO(item['source']['data']))
             elif item['type'] == 'text':
                 # Split the message by code blocks
                 messages = item['text'].split('```')
