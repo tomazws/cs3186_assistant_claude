@@ -17,14 +17,14 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    st.write(content)
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
         for i in range(len(messages)):
             message = messages[i]
             if i % 2 == 0:
-                st.markdown(message)
+                st.write(message)
             else:
                 # If the message is a graphviz diagram, display it as a diagram
                 match = re.search('digraph .*{', message)
