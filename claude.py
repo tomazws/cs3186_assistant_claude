@@ -32,7 +32,7 @@ def getCompletion(prompt):
                 messages = st.session_state.messages
             )
             st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
-            displayMessage('assistant', response.content[0])
+            displayMessage('assistant', response.content[0].text)
         except Exception as e:
             st.error(f'Error: {e}')
 
