@@ -21,14 +21,17 @@ def displayMessage(role, content):
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
-        for message in messages:
-            # If the message is a graphviz diagram, display it as a diagram
-            match = re.search('digraph .*{', message)
-            if match and message[-2] == '}':
-                message = message[match.start():]
-                st.graphviz_chart(message)
+        for i in range(len(messages)):
+            if i % 2 == 0:
+                st.write(messages[i])
             else:
-                st.write(message)
+                # If the message is a graphviz diagram, display it as a diagram
+                match = re.search('digraph .*{', message[i])
+                if match and message[i][-2] == '}':
+                    message[i] = message[i][match.start():]
+                    st.graphviz_chart(message[i])
+                else:
+                    st.write(message[i])
     st.write('')
 
 def getCompletion(prompt):
