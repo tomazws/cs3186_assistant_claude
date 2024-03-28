@@ -24,13 +24,16 @@ def displayMessage(role, content):
 
 def getCompletion(prompt):
     with st.spinner('Thinking ...'):
-        response = client.messages.create(
-            model = 'claude-3-opus-20240229',
-            max_tokens = 1024,
-            messages = st.session_state.messages
-        )
-        st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
-        displayMessage('assistant', response.content[0])
+        try:
+            response = client.messages.create(
+                model = 'claude-3-opus-20240229',
+                max_tokens = 1024,
+                messages = st.session_state.messages
+            )
+            st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
+            displayMessage('assistant', response.content[0])
+        except Exception as e:
+            st.error(f'Error: {e}')
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
