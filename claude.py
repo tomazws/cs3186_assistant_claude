@@ -22,6 +22,13 @@ if 'thread' not in st.session_state:
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
+################################################################################
+##                                  LAYOUTS                                   ##
+################################################################################
+# Create title and subheader for the Streamlit page
+st.title('CS 3186 Student Assistant Chatbot')
+st.subheader('Using Anthropic Claude API')
+st.write('Testing')
 
 message = client.messages.create(
     model="claude-3-opus-20240229",
@@ -30,4 +37,5 @@ message = client.messages.create(
         {"role": "user", "content": "Hello, Claude"}
     ]
 )
+
 st.write(message.content)
