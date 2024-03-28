@@ -10,7 +10,7 @@ import prompts
 client = Anthropic(api_key=st.secrets['CLAUDE_API_KEY'])
 
 if 'messages' not in st.session_state:
-    st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
+    st.session_state.messages = []
 
 ################################################################################
 ##                                 FUNCTIONS                                  ##
@@ -28,6 +28,7 @@ def getCompletion(prompt):
             response = client.messages.create(
                 model = 'claude-3-opus-20240229',
                 max_tokens = 1024,
+                sytem = prompts.get_instructions(),
                 messages = st.session_state.messages
             )
             st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
@@ -43,7 +44,7 @@ st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Using Anthropic Claude API')
 
 # Display chat messages
-for message in st.session_state.messages[1:]:
+for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
 
 with st.sidebar:
