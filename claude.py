@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 import streamlit as st
 import re
+import prompts
 
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
@@ -9,7 +10,7 @@ import re
 client = Anthropic(api_key=st.secrets['CLAUDE_API_KEY'])
 
 if 'messages' not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
 
 ################################################################################
 ##                                 FUNCTIONS                                  ##
