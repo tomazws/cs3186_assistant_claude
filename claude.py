@@ -58,6 +58,13 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
 
+# Chat input
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    # Display user message in chat message container and add to chat history
+    displayMessage('user', prompt)
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    getCompletion(prompt)
+
 # message = client.messages.create(
 #     model = 'claude-3-opus-20240229',
 #     max_tokens = 1024,
