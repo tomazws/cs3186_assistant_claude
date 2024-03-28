@@ -30,7 +30,7 @@ def getCompletion(prompt):
             messages = st.session_state.messages
         )
         st.session_state.messages.append({'role': 'assistant', 'content': response.content[0]})
-        displayMessage('assistant', response.content[0]['ContentBlock'])
+        displayMessage('assistant', response.content)
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
