@@ -2,6 +2,7 @@ from anthropic import Anthropic
 import streamlit as st
 import re
 import base64
+import io
 import prompts
 
 ################################################################################
@@ -22,8 +23,7 @@ def displayMessage(role, content):
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image':
-                pass
-                #st.image(item['source']['data'])
+                st.image(io.BytesIO(item['source']['data']))
             elif item['type'] == 'text':
                 # Split the message by code blocks
                 messages = item['text'].split('```')
