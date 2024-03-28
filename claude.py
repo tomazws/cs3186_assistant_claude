@@ -40,7 +40,7 @@ st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Using Anthropic Claude API')
 
 # Display chat messages
-for message in st.session_state.messages:
+for message in st.session_state.messages[1:]:
     displayMessage(message['role'], message['content'])
 
 with st.sidebar:
