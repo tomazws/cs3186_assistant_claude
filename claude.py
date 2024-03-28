@@ -1,5 +1,5 @@
 from anthropic import Anthropic
-import streamlit as streamlit
+import streamlit as st
 
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
