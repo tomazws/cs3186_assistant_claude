@@ -56,9 +56,9 @@ def getCompletion():
                     'text': response.content[0].text
                 }
             ]
-            st.session_state.messages.append({'role': 'assistant', 'content': content})
             st.text(response.content)
-            displayMessage('assistant', response.content[0].text)
+            displayMessage('assistant', content)
+            st.session_state.messages.append({'role': 'assistant', 'content': content})
         except Exception as e:
             st.error(f'Error: {e}')
 
