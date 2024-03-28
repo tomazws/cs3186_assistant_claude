@@ -76,15 +76,15 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
 
-col1, col2 = st.columns([1, 5])
 # File uploader
-with col1:
-    uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader("Choose a file")
 
 # Chat input
-with col2:
-    if prompt := st.chat_input('Ask me anything about CS 3186'):
-        # Display user message in chat message container and add to chat history
-        displayMessage('user', prompt)
-        st.session_state.messages.append({'role': 'user', 'content': prompt})
-        getCompletion(prompt)
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    # If there are files uploaded
+
+    
+    # Display user message in chat message container and add to chat history
+    displayMessage('user', prompt)
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    getCompletion(prompt)
