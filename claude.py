@@ -32,6 +32,14 @@ def displayMessage(role, content):
 
 def getCompletion(prompt):
     st.write(st.session_state.messages)
+    with st.spinner('Thinking ...'):
+        response = client.messages.create(
+            model = 'claude-3-opus-20240229',
+            max_tokens = 1024,
+            messages = st.session_state.messages
+        )
+        st.session_state.messages.append({'role': 'assistant', 'content': message.content})
+        displayMessage('assistant', response.content)
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
@@ -65,13 +73,3 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     getCompletion(prompt)
-
-# message = client.messages.create(
-#     model = 'claude-3-opus-20240229',
-#     max_tokens = 1024,
-#     messages = [
-#         {'role': 'user', 'content': 'Hello, Claude'}
-#     ]
-# )
-
-# st.write(message.content)
