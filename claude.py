@@ -77,13 +77,16 @@ if st.sidebar.button('Generate a DFA diagram'):
     getCompletion(message)
 
 # File uploader
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
+if uploaded_file is not None:
+    # Read file as bytes:
+    bytes_data = uploaded_file.getvalue().decode('utf-8')
+    st.write(bytes_data)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     # If there are files uploaded
 
-    
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
