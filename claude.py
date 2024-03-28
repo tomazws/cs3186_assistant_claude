@@ -20,29 +20,28 @@ if 'messages' not in st.session_state:
 def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
-        if type(content) == list:
-            for item in content:
-                if item['type'] == 'image':
-                    pass
-                    #st.image(item['source']['data'])
-        else:
-            # Split the message by code blocks
-            messages = content.split('```')
-            for i in range(len(messages)):
-                message = messages[i]
-                if i % 2 == 0:
-                    st.write(message)
-                else:
-                    # If the message is a graphviz diagram, display it as a diagram
-                    match = re.search('digraph .*{', message)
-                    if match and message[-2] == '}':
-                        message = message[match.start():]
-                        st.graphviz_chart(message)
+        for item in content:
+            if item['type'] == 'image':
+                pass
+                #st.image(item['source']['data'])
+            elif item['type'] == 'text':
+                # Split the message by code blocks
+                messages = item.split('```')
+                for i in range(len(messages)):
+                    message = messages[i]
+                    if i % 2 == 0:
+                        st.write(message)
                     else:
-                        st.code(message)
+                        # If the message is a graphviz diagram, display it as a diagram
+                        match = re.search('digraph .*{', message)
+                        if match and message[-2] == '}':
+                            message = message[match.start():]
+                            st.graphviz_chart(message)
+                        else:
+                            st.code(message)
     st.write('')
 
-def getCompletion(prompt):
+def getCompletion():
     with st.spinner('Thinking ...'):
         try:
             response = client.messages.create(
@@ -72,22 +71,34 @@ with st.sidebar:
     st.write('Features')
     
 if st.sidebar.button('Convert NFA to DFA'):
-    message = 'I would like to convert NFA to DFA'
-    displayMessage('user', message)
-    st.session_state.messages.append({'role': 'user', 'content': message})
-    getCompletion(message)
+    content = [
+        {
+            'type': 'text',
+            'text': 'I would like to convert NFA to DFA'
+        }
+    ]
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
     
 if st.sidebar.button('Generate a DFA diagram'):
-    message = 'I would like to generate a DFA from regular expression or langage'
-    displayMessage('user', message)
-    st.session_state.messages.append({'role': 'user', 'content': message})
-    getCompletion(message)
+    content = [
+        {
+            'type': 'text',
+            'text': 'I would like to generate a DFA from regular expression or langage'
+        }
+    ]
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
 
 # File uploader
 uploaded_image = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
+    content = []
+
     # If there are files uploaded
     if uploaded_image is not None:
         # Convert the image's byte data into base64
@@ -95,18 +106,20 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         # st.write('-----------------')
         # st.write(uploaded_image.type)
 
-        image_content = [{
+        content.append({
             'type': 'image',
             'source': {
                 'type': 'base64',
                 'media_type': uploaded_image.type,
                 'data': base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
             }
-        }]
-        displayMessage('user', image_content)
-        st.session_state.messages.append({'role': 'user', 'content': image_content})
+        })
 
     # Display user message in chat message container and add to chat history
-    displayMessage('user', prompt)
-    st.session_state.messages.append({'role': 'user', 'content': prompt})
-    getCompletion(prompt)
+    content.append({
+        'type': 'text',
+        'text': prompt
+    })
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
