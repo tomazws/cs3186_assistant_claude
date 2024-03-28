@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 import streamlit as st
 import re
+from io import StringIO
 import prompts
 
 ################################################################################
@@ -80,7 +81,7 @@ if st.sidebar.button('Generate a DFA diagram'):
 uploaded_file = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
 if uploaded_file is not None:
     # Read file as bytes:
-    bytes_data = uploaded_file.getvalue().decode('utf-8')
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
     st.write(bytes_data)
 
 # Chat input
