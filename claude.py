@@ -38,7 +38,7 @@ def getCompletion(prompt):
             max_tokens = 1024,
             messages = st.session_state.messages
         )
-        st.session_state.messages.append({'role': 'assistant', 'content': message.content})
+        st.session_state.messages.append({'role': 'assistant', 'content': response.content})
         displayMessage('assistant', response.content)
 
 ################################################################################
