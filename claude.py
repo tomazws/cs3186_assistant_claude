@@ -24,7 +24,7 @@ def displayMessage(role, content):
         for i in range(len(messages)):
             message = messages[i]
             if i % 2 == 0:
-                st.write(message)
+                st.markdown(message)
             else:
                 # If the message is a graphviz diagram, display it as a diagram
                 match = re.search('digraph .*{', message)
