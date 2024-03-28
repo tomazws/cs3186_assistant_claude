@@ -21,7 +21,7 @@ def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
         if type(content) == list:
-            st.markdown(content)
+            st.image(content)
         else:
             # Split the message by code blocks
             messages = content.split('```')
