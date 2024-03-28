@@ -50,7 +50,13 @@ def getCompletion():
                 system = 'When illustrating a state diagram, use DOT language representation of the state diagram instead.',
                 messages = st.session_state.messages
             )
-            st.session_state.messages.append({'role': 'assistant', 'content': response.content[0].text})
+            content = [
+                {
+                    'type': 'text',
+                    'text': response.content[0].text
+                }
+            ]
+            st.session_state.messages.append({'role': 'assistant', 'content': content})
             st.text(response.content)
             displayMessage('assistant', response.content[0].text)
         except Exception as e:
