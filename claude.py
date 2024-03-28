@@ -23,7 +23,8 @@ def displayMessage(role, content):
         if type(content) == list:
             for item in content:
                 if item['type'] == 'image':
-                    st.image(item['source']['data'])
+                    pass
+                    #st.image(item['source']['data'])
         else:
             # Split the message by code blocks
             messages = content.split('```')
@@ -103,6 +104,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             }
         }]
         displayMessage('user', image_content)
+        st.session_state.messages.append({'role': 'user', 'content': image_content})
 
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
