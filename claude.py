@@ -30,7 +30,7 @@ def displayMessage(role, content):
     st.write('')
 
 def getCompletion(prompt):
-    pass
+    st.write(st.session_state.messages)
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
