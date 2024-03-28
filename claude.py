@@ -78,14 +78,12 @@ if st.sidebar.button('Generate a DFA diagram'):
     getCompletion(message)
 
 # File uploader
-uploaded_file = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
-if uploaded_file is not None:
-    # To read file as bytes:
-    bytes_data = uploaded_file.getvalue()
-
-    image_data = base64.b64encode(uploaded_file.getvalue()).decode("utf-8")
+uploaded_image = st.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
+if uploaded_image is not None:
+    # Convert the image's byte data into base64
+    image_data = base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
     st.write('-----------------')
-    st.write(image_data)
+    st.write(uploaded_image.type())
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
