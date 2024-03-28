@@ -26,7 +26,7 @@ def displayMessage(role, content):
                 #st.image(item['source']['data'])
             elif item['type'] == 'text':
                 # Split the message by code blocks
-                messages = item.split('```')
+                messages = item['text'].split('```')
                 for i in range(len(messages)):
                     message = messages[i]
                     if i % 2 == 0:
