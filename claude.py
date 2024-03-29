@@ -27,21 +27,16 @@ def displayMessage(role, content):
             elif item['type'] == 'text':
                 string_pos = 0
                 for match in re.finditer('```[^}]*digraph[^}]*}\n```|digraph.*{[^}]*}', item['text']):
-                    st.text('------------------')
-                    st.text(match.group())
-                    st.text('------------------')
                     if re.search('```dot', match.group()):
                         dot_script = match.group()[6: -3]
                     elif re.search('```', match.group()):
                         dot_script = match.group()[3: -3]
                     else:
                         dot_script = match.group()
-                    st.text(match.group())
-                    st.text('------------------')
-                    st.text(item['text'][string_pos: match.start() - 1])
+                    st.write(item['text'][string_pos: match.start() - 1])
                     st.graphviz_chart(dot_script)
                     string_pos = match.end() + 1
-                st.text(item['text'][string_pos:])
+                st.write(item['text'][string_pos:])
     st.write('')
 
 def getCompletion():
