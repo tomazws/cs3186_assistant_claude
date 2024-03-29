@@ -39,7 +39,7 @@ def getCompletion():
             response = client.messages.create(
                 model = 'claude-3-opus-20240229',
                 max_tokens = 1024,
-                system = 'When illustrating a state diagram, use DOT language representation of the state diagram instead.',
+                system = prompts.get_instructions(),
                 messages = st.session_state.messages
             )
             content = [
