@@ -26,7 +26,7 @@ def displayMessage(role, content):
                 st.image(io.BytesIO(base64.b64decode(item['source']['data'])))
             elif item['type'] == 'text':
                 string_pos = 0
-                for match in re.finditer('digraph.*{[^}]*}', item['text']):
+                for match in re.finditer('```dot[^}]*}\n```|digraph.*{[^}]*}', item['text']):
                     st.write(item['text'][string_pos: match.start() - 1])
                     st.graphviz_chart(match.group())
                     string_pos = match.end() + 1
