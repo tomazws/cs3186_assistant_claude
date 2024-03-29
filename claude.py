@@ -8,7 +8,7 @@ import prompts
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
 ################################################################################
-# Initialize OpenAI Assistant API
+# Initialize Anthropic Claude API
 client = Anthropic(api_key=st.secrets['CLAUDE_API_KEY'])
 
 if 'messages' not in st.session_state:
