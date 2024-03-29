@@ -25,20 +25,13 @@ def displayMessage(role, content):
             if item['type'] == 'image':
                 st.image(io.BytesIO(base64.b64decode(item['source']['data'])))
             elif item['type'] == 'text':
-                # Split the message by code blocks
-                messages = item['text'].split('```')
-                for i in range(len(messages)):
-                    message = messages[i]
-                    if i % 2 == 0:
-                        st.write(message)
-                    else:
-                        # If the message is a graphviz diagram, display it as a diagram
-                        match = re.search('digraph .*{', message)
-                        if match and message[-2] == '}':
-                            message = message[match.start():]
-                            st.graphviz_chart(message)
-                        else:
-                            st.code(message)
+                string_pos = 0
+                for match in re.finditer('digraph.*{[^}]*}', item['text']):
+                    st.write(item['text'][string_pos: match.start() - 1])
+                    st.graphviz_chart(match.group())
+                    string_pos = match.end() + 1
+                st.write(item['text'][string_pos:])
+
     st.write('')
 
 def getCompletion():
