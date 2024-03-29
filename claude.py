@@ -33,10 +33,10 @@ def displayMessage(role, content):
                         dot_script = match.group()[3: -3]
                     else:
                         dot_script = match.group()
-                    st.write(item['text'][string_pos: match.start() - 1])
+                    st.text(item['text'][string_pos: match.start() - 1])
                     st.graphviz_chart(dot_script)
                     string_pos = match.end() + 1
-                st.write(item['text'][string_pos:])
+                st.text(item['text'][string_pos:])
     st.write('')
 
 def getCompletion():
