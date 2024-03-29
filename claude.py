@@ -99,11 +99,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # If there are files uploaded
     if uploaded_image is not None:
-        # Convert the image's byte data into base64
-        # image_data = base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
-        # st.write('-----------------')
-        # st.write(uploaded_image.type)
-
         content.append({
             'type': 'image',
             'source': {
