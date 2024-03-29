@@ -19,7 +19,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    #st.text(content)
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image':
@@ -54,7 +54,7 @@ def getCompletion():
                     'text': response.content[0].text
                 }
             ]
-            st.text(response.content)
+            #st.text(response.content)
             displayMessage('assistant', content)
             st.session_state.messages.append({'role': 'assistant', 'content': content})
         except Exception as e:
@@ -65,7 +65,7 @@ def getCompletion():
 ################################################################################
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
-st.subheader('Using Anthropic Claude API')
+st.subheader('Using Anthropic Claude API (Claude 3 Opus)')
 
 # Display chat messages
 for message in st.session_state.messages:
